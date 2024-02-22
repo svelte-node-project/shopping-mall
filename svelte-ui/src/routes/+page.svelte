@@ -1,5 +1,15 @@
 <script>
-    import TodoList from '../components/todos-management/TodoList.svelte';
-  </script>
+  import Carousel from '../components/Carousel.svelte';
+  import Cards from '../components/Cards.svelte';
+  import '../app.css';
+</script>
+
+<svelte:head>
+  <title>Aurora</title>
+</svelte:head>
+
+<Carousel />  
+
+<Cards />
+
   
-  <TodoList />
