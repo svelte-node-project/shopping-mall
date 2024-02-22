@@ -1,30 +1,40 @@
 services:
-  api:
-    build: api
-    restart: unless-stopped
-    volumes:
-      - ./api:/app
-    ports:
-      - 3001:3001
-    depends_on:
-      - database
-    env_file:
-      - project.env
+    app:
+        build: app
+        restart: unless-stopped
+        volumes:
+            - ./app:/app
+        ports:
+            - 3001:3001
+        depends_on:
+            - database
+        env_file:
+            - project.env
 
-  database:
-    container_name: postgresql_dbase
-    image: postgres:16.1
-    restart: unless-stopped
-    env_file:
-      - project.env
+    database:
+        container_name: postgresql_dbase
+        image: postgres:16.1
+        restart: unless-stopped
+        env_file:
+            - project.env
 
-  ui:
-    build: ./svelte-ui
-    restart: unless-stopped
-    volumes:
-      - ./svelte-ui:/app
-      - /app/node_modules
-    ports:
-      - 5173:5173
-    depends_on:
-      - api
+    database-migrations:
+        image: flyway/flyway:10.8.1-alpine
+        env_file:
+            - project.env
+        depends_on:
+            - database
+        volumes:
+            - ./flyway/sql:/flyway/sql
+        command: -connectRetries=60 -baselineOnMigrate=true migrate
+
+    ui:
+        build: ./svelte-ui
+        restart: unless-stopped
+        volumes:
+            - ./svelte-ui:/app
+            - /app/node_modules
+        ports:
+            - 5173:5173
+        depends_on:
+            - app
