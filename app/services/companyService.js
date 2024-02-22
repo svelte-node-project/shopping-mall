@@ -4,7 +4,7 @@ const transformArray = (arr) => {
     return arr.map((el) => `'${el}'`);
 };
 
-const getCompanies = async (types = ["Tenant"], categories = []) => {
+const getCompanies = async (types = [], categories = []) => {
     try {
         const typesCondition =
             types && types.length > 0
@@ -43,10 +43,12 @@ const getCompanies = async (types = ["Tenant"], categories = []) => {
     }
 };
 
-const getCompany = async (id, fields = []) => {
+const getCompany = async (companyId, fields = []) => {
     try {
-        if (!id || isNaN(parseInt(id))) {
-            console.error(`Incorrect company id: ${id}.`);
+        const id = parseInt(companyId);
+
+        if (!id || isNaN(id) || id != companyId) {
+            console.error(`Incorrect company id: ${companyId}.`);
             return false;
         }
 
@@ -57,7 +59,7 @@ const getCompany = async (id, fields = []) => {
             `SELECT ${fieldsStr} FROM companies WHERE id = ${id}`
         );
         if (result && result.rows) {
-            return result.rows;
+            return result.rows[0];
         } else {
             console.error(`Incorrect request (id: ${id}, fileds: ${fields}).`);
             return false;
