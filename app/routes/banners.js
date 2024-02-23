@@ -1,5 +1,5 @@
 import express from "express";
-import bannersController from "../controllers/offers.js";
+import bannersController from "../controllers/banners.js";
 
 let bannersRouter = express.Router();
 

@@ -3,7 +3,10 @@ import { pool } from "../database/database.js";
 const bannersController = {
   getAll: async (req, res) => {
     try {
-      let data = await pool.query("SELECT * FROM banners");
+      let today = new Date().toISOString();
+      let data = await pool.query(
+        `SELECT * FROM banners WHERE start_date <= '${today}' AND end_date >= '${today}'`
+      );
       res.json(data.rows);
     } catch (e) {
       console.log(e);
