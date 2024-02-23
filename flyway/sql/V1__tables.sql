@@ -62,8 +62,8 @@ CREATE TABLE offers (
     category_id INTEGER NOT NULL REFERENCES categories(id),
     name TEXT NOT NULL,
     description  TEXT NOT NULL,
-    start_date DATE,
-    end_date DATE
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL
 );
 
 -- Working hours
