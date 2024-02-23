@@ -12,7 +12,12 @@ const openingHoursController = {
       }
 
       const result = await pool.query(
-        `SELECT * FROM working_hours WHERE company_id = ${id}`
+        `SELECT * FROM working_hours WHERE company_id = ${id}
+            AND (
+                end_date IS NULL
+                OR
+                (end_date IS NOT NULL AND NOW() < end_date)
+            )`
       );
       res.json(result.rows);
     } catch (e) {
