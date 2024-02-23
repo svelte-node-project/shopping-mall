@@ -17,6 +17,7 @@ CREATE TABLE banners (
     offer_id INTEGER REFERENCES offers(id),
     news_id INTEGER REFERENCES news(id),
     image_link TEXT,
+    navigation_link TEXT,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL
 );
