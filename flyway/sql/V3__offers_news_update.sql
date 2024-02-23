@@ -7,7 +7,7 @@ ALTER TABLE offers
 ALTER TABLE news
     ADD image_link TEXT,
     ADD show_on_homepage BOOLEAN NOT NULL DEFAULT false,
-    ADD news_end_date DATE;
+    ADD news_end_date DATE NOT NULL;
 
 
 
