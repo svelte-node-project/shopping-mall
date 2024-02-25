@@ -48,22 +48,46 @@ const companiesController = {
             const categories = req.body.categories ? req.body.categories : [];
             const name = req.body.name ? req.body.name : "";
 
+            let companiesQuery = `
+                SELECT * FROM companies ${getCondition(types, categories, name)}
+            `;
+            if (req.body.full) {
+                companiesQuery = `
+                    SELECT companies.*, locations, working_hours
+                    FROM
+                        (${companiesQuery}) companies
+                    LEFT JOIN
+                        (SELECT company_id, JSON_AGG(JSON_BUILD_OBJECT(
+                            'week_day', week_day,
+                            'start_time', start_time,
+                            'end_time', end_time,
+                            'start_date', start_date,
+                            'end_date', end_date
+                        )) AS working_hours
+                        FROM working_hours
+                        WHERE end_date IS NULL OR end_date >= NOW()
+                        GROUP BY company_id) company_working_hours
+                    ON companies.id = company_working_hours.company_id
+                    LEFT JOIN
+                        (SELECT company_id, JSON_AGG(JSON_BUILD_OBJECT(
+                            'building', building,
+                            'level', level,
+                            'place_number', place_number
+                        )) AS locations
+                        FROM locations
+                        GROUP BY company_id) company_locations
+                    ON companies.id = company_locations.company_id
+                `;
+            }
+
             const result = req.body.group
                 ? await pool.query(`
-                        SELECT UPPER(LEFT(name, 1)) AS letter, JSON_AGG(companies.* ORDER BY name) AS companies_list
-                        FROM companies ${getCondition(types, categories, name)}
+                        SELECT UPPER(LEFT(name, 1)) AS letter, JSON_AGG(companies_info.* ORDER BY name) AS companies
+                        FROM (${companiesQuery}) companies_info
                         GROUP BY letter
                         ORDER BY letter
                     `)
-                : await pool.query(`
-                        SELECT *
-                        FROM companies ${getCondition(types, categories, name)}
-                    `);
-
-            // console.log(result.rows[0].companies_list[0].id);
-            // console.log(result.rows[0].companies_list[0].name);
-            // console.log(result.rows[0].companies_list[0].description);
-            // res.json(result.rows);
+                : await pool.query(`${companiesQuery}`);
 
             res.json(result.rows);
         } catch (e) {
