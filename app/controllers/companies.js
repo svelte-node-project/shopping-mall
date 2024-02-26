@@ -44,30 +44,41 @@ const getCondition = (types, categories, name) => {
 const companiesController = {
     getAll: async (req, res) => {
         try {
-            const types = req.body.types ? req.body.types : [];
-            const categories = req.body.categories ? req.body.categories : [];
-            const name = req.body.name ? req.body.name : "";
+            const types = req.query.types ? req.query.types : [];
+            const categories = req.query.categories ? req.query.categories : [];
+            const name = req.query.name ? req.query.name : "";
 
             let companiesQuery = `
                 SELECT * FROM companies ${getCondition(types, categories, name)}
             `;
-            if (req.body.full) {
+            if (req.query.full) {
                 companiesQuery = `
-                    SELECT companies.*, locations, working_hours
+                    SELECT companies.*, categories, locations, working_hours
                     FROM
                         (${companiesQuery}) companies
+
+                    LEFT JOIN
+                        (SELECT company_id, JSON_AGG(name) AS categories
+                        FROM services
+                        LEFT JOIN categories
+                        ON services.category_id = categories.id
+                        GROUP BY company_id) categories
+                    ON companies.id = categories.company_id
+
                     LEFT JOIN
                         (SELECT company_id, JSON_AGG(JSON_BUILD_OBJECT(
                             'week_day', week_day,
                             'start_time', start_time,
                             'end_time', end_time,
                             'start_date', start_date,
-                            'end_date', end_date
+                            'end_date', end_date,
+                            'by_appointment', by_appointment
                         )) AS working_hours
                         FROM working_hours
-                        WHERE end_date IS NULL OR end_date >= NOW()
+                        WHERE by_appointment IS NOT NULL OR ((end_date IS NULL OR end_date >= NOW()))
                         GROUP BY company_id) company_working_hours
                     ON companies.id = company_working_hours.company_id
+
                     LEFT JOIN
                         (SELECT company_id, JSON_AGG(JSON_BUILD_OBJECT(
                             'building', building,
@@ -80,7 +91,7 @@ const companiesController = {
                 `;
             }
 
-            const result = req.body.group
+            const result = req.query.group
                 ? await pool.query(`
                         SELECT UPPER(LEFT(name, 1)) AS letter, JSON_AGG(companies_info.* ORDER BY name) AS companies
                         FROM (${companiesQuery}) companies_info
