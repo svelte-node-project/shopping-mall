@@ -41,6 +41,51 @@ const getCondition = (types, categories, name) => {
     return condition.length > 0 ? `WHERE ${condition.join(" AND ")}` : "";
 };
 
+const getFullDataQuery = (simpleQuery) => {
+    return `
+        SELECT companies.*, categories, locations, working_hours
+        FROM
+            (${simpleQuery}) companies
+
+        LEFT JOIN
+            (SELECT company_id, JSON_AGG(JSON_BUILD_OBJECT(
+                'name', name,
+                'name_in_url', name_in_url
+            )) AS categories
+            FROM
+                (SELECT * FROM services
+                WHERE main_category = true) services
+            LEFT JOIN categories
+            ON services.category_id = categories.id
+            GROUP BY company_id, name_in_url) categories
+        ON companies.id = categories.company_id
+
+        LEFT JOIN
+            (SELECT company_id, JSON_AGG(JSON_BUILD_OBJECT(
+                'week_day', week_day,
+                'start_time', start_time,
+                'end_time', end_time,
+                'start_date', start_date,
+                'end_date', end_date,
+                'by_appointment', by_appointment
+            )) AS working_hours
+            FROM working_hours
+            WHERE by_appointment IS NOT NULL OR ((end_date IS NULL OR end_date >= NOW()))
+            GROUP BY company_id) company_working_hours
+        ON companies.id = company_working_hours.company_id
+
+        LEFT JOIN
+            (SELECT company_id, JSON_AGG(JSON_BUILD_OBJECT(
+                'building', building,
+                'level', level,
+                'place_number', place_number
+            )) AS locations
+            FROM locations
+            GROUP BY company_id) company_locations
+        ON companies.id = company_locations.company_id
+    `;
+};
+
 const companiesController = {
     getAll: async (req, res) => {
         try {
@@ -51,54 +96,19 @@ const companiesController = {
             let companiesQuery = `
                 SELECT * FROM companies ${getCondition(types, categories, name)}
             `;
-            if (req.query.full) {
-                companiesQuery = `
-                    SELECT companies.*, categories, locations, working_hours
-                    FROM
-                        (${companiesQuery}) companies
-
-                    LEFT JOIN
-                        (SELECT company_id, JSON_AGG(name) AS categories
-                        FROM services
-                        LEFT JOIN categories
-                        ON services.category_id = categories.id
-                        GROUP BY company_id) categories
-                    ON companies.id = categories.company_id
-
-                    LEFT JOIN
-                        (SELECT company_id, JSON_AGG(JSON_BUILD_OBJECT(
-                            'week_day', week_day,
-                            'start_time', start_time,
-                            'end_time', end_time,
-                            'start_date', start_date,
-                            'end_date', end_date,
-                            'by_appointment', by_appointment
-                        )) AS working_hours
-                        FROM working_hours
-                        WHERE by_appointment IS NOT NULL OR ((end_date IS NULL OR end_date >= NOW()))
-                        GROUP BY company_id) company_working_hours
-                    ON companies.id = company_working_hours.company_id
-
-                    LEFT JOIN
-                        (SELECT company_id, JSON_AGG(JSON_BUILD_OBJECT(
-                            'building', building,
-                            'level', level,
-                            'place_number', place_number
-                        )) AS locations
-                        FROM locations
-                        GROUP BY company_id) company_locations
-                    ON companies.id = company_locations.company_id
-                `;
+            if (req.query.full && req.query.full === "true") {
+                companiesQuery = getFullDataQuery(companiesQuery);
             }
 
-            const result = req.query.group
-                ? await pool.query(`
+            const result =
+                req.query.group && req.query.group === "true"
+                    ? await pool.query(`
                         SELECT UPPER(LEFT(name, 1)) AS letter, JSON_AGG(companies_info.* ORDER BY name) AS companies
                         FROM (${companiesQuery}) companies_info
                         GROUP BY letter
                         ORDER BY letter
                     `)
-                : await pool.query(`${companiesQuery}`);
+                    : await pool.query(`${companiesQuery}`);
 
             res.json(result.rows);
         } catch (e) {
@@ -110,25 +120,28 @@ const companiesController = {
     getOne: async (req, res) => {
         try {
             const id = req.params.id;
-            const fields = req.query.fields ? req.query.fields : [];
 
-            if (!id || isNaN(parseInt(id))) {
+            if (!id) {
                 console.error(`Incorrect company id: ${id}.`);
                 return false;
             }
 
-            let fieldsStr = fields.toString();
-            fieldsStr = fieldsStr ? fieldsStr : "*";
+            const searchCondition = isNaN(parseInt(id))
+                ? `name_in_url = '${id}'`
+                : `id = ${id}`;
 
-            const result = await pool.query(
-                `SELECT ${fieldsStr} FROM companies WHERE id = ${id}`
-            );
+            let companyQuery = `SELECT * FROM companies WHERE ${searchCondition}`;
+
+            if (req.query.full && req.query.full === "true") {
+                companyQuery = getFullDataQuery(companyQuery);
+            }
+
+            const result = await pool.query(companyQuery);
+
             if (result && result.rows) {
                 res.json(result.rows[0]);
             } else {
-                console.error(
-                    `Incorrect request (id: ${id}, fileds: ${fields}).`
-                );
+                console.error(`Incorrect request (id: ${id}).`);
                 return false;
             }
         } catch (e) {

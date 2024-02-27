@@ -1,6 +1,7 @@
 <script>
     import Companies from '../../../components/Companies.svelte';
 
+    const { data } = $props();
 </script>
 
-<Companies />
+<Companies link={data.link}/>

@@ -91,22 +91,3 @@ CREATE TABLE settings (
     name TEXT NOT NULL,
     setting_values TEXT []
 );
-
-
-
--- -- ============================================
--- SELECT * FROM companies
--- WHERE companies.type_id IN (SELECT id FROM company_types WHERE type_name = 'tenant')
--- JOIN
---     services
--- ON companies.id = services.company_id
--- WHERE 
-
-
-
-
--- select * from companies
-
--- inner join company_types on 
-
--- where type_id = 'ten'
