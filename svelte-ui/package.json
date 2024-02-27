@@ -21,6 +21,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"flowbite": "^2.3.0",
 		"swiper": "^11.0.6"
 	}
 }
