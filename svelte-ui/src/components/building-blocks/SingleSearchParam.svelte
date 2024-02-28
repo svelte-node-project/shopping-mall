@@ -8,6 +8,7 @@
 
     const fetchLinks = {
         "category": "http://localhost:3001/categories",
+        "floor": ""
     };
 
     const fieldName = {
@@ -19,8 +20,6 @@
 
     const updateShowOptions = () => {
         showOptions = !showOptions;
-        // console.log("***************")
-        // console.log(showOptions)
     };
 
     const closeOptions = () => {
@@ -51,7 +50,6 @@
     {:else}        
         <button type="button" on:click|stopPropagation={updateShowOptions}>{value === "" ? defaultName : value}</button>
         {#if showOptions}
-            <!-- <Dropdown type={type} fetchFrom={fetchLinks[type]} bind:value={value} /> -->
             <Dropdown options={options} bind:showOptions={showOptions} bind:value={value} />
         {/if}    
     {/if}
@@ -60,12 +58,11 @@
 
 <style>
     .filter {
-        width: 25%;
+        width: 90%;
     }
 
-    .filter button {
+    .filter button, input {
         width: 100%;
-        /* padding: 0;
-        margin: 0; */
+        padding: 0;
     }
 </style>
