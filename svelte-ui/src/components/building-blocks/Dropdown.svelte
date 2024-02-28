@@ -1,19 +1,41 @@
 <script>
-    let { list, searchBy } = $props();
+    import { onMount } from "svelte";
 
-    const updateSearchBy = (item) => {
+    // let { type, fetchFrom, value } = $props();
+    let { options, value, showOptions } = $props();
+    // let options;
+    // const fieldName = {
+    //     "category": "name",
+    //     "floor": "level"
+    // };
+
+    const updateValueAndClose = (item) => {
         return () => {
-            searchBy = item;
-            return searchBy;
-        }
-    }
+            // console.log("????????????????")
+            value = item;
+            // console.log(value);
+            showOptions = !showOptions;
+            // return value;
+        };
+    };
+
+    // onMount(async () => {
+    //     const result = await fetch(fetchFrom);
+    //     options = [
+    //         { name: "All", value: ""},
+    //         ...(await result.json())
+    //             .map(el => ({ name: el[fieldName[type]], value: el[fieldName[type]] }))
+    //     ];
+    //     console.log("!!!!!!!!!");
+    //     console.log(options);
+    // });
 
 </script>
 
 
 <div class = "dropdown">
-    {#each list as item}
-        <button type="button" on:click={updateSearchBy(item.value)}>{item.name}</button>
+    {#each options as item}
+        <button type="button" on:click={updateValueAndClose(item.value)}>{item.name}</button>
     {/each}
 </div>
 
@@ -22,9 +44,11 @@
     .dropdown {
         display: flex;
         flex-direction: column;
+        cursor: pointer;
         position: absolute;
         overflow: auto;
-        cursor: pointer;
         width: inherit;
+        max-width: 100%;
+        z-index: 99;
     }    
 </style>
