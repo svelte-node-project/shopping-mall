@@ -2,7 +2,6 @@
     import { getFormattedWorkingHours } from "../../helpers/workingHoursHelper";
 
     const { company, link } = $props();
-    // console.log(company)
 
     const workingHoursToday = (() => {
         const result = getFormattedWorkingHours(company.working_hours, true)[0];
@@ -10,6 +9,7 @@
     })();
 
 </script>
+
 
 <div class:closed={workingHoursToday.toLowerCase().includes("closed") ? true : false}>
     <h3><a href="{link}/{company.categories[0].name_in_url}/{company.name_in_url}">{company.name}</a></h3>
@@ -21,6 +21,7 @@
     </p>
     <p>Today: <strong>{workingHoursToday}</strong></p>
 </div>
+
 
 <style>
     .closed {
