@@ -5,7 +5,8 @@
     import CompaniesList from "./building-blocks/CompaniesList.svelte";
     import StoresSearchPanel from "./building-blocks/StoresSearchPanel.svelte";
 
-    const { link }= $props();
+    // const { link }= $props();
+    let { searchParams, href }= $props();
     let stores = $state([]);
     // let categories = [];
     // let floors = [];
@@ -16,22 +17,26 @@
     // let showCategories = $state(false);
     // let showFloors = $state(false);
 
-    let searchParams = $state({
-        "category": "",
-        "floor": "",
-        "text": ""
-    });
+    // let searchParams = $state({
+    //     "category": "",
+    //     "floor": "",
+    //     "text": ""
+    // });
     // const searchParams = $state({
     //     "category": "",
     //     "floor": "",
     //     "text": ""
     // });
 
+    const link = "stores";
+
     const init = async () => {
         // const time1 = Date.now();
 
         // const result = await fetch("http://localhost:3001/companies?types=tenant&group=true&full=true");
-        let result = await fetch("http://localhost:3001/companies?group=true&full=true");
+        // let result = await fetch("http://localhost:3001/companies?group=true&full=true");
+        // let result = await fetch("http://localhost:3001/companies?group=true&full=true&categories=cafes%20and%20restaurants");
+        const result = await fetch(href);
         
         // const time2 = Date.now();
         // console.log(`Fetch to companies: ${time2 - time1}`);
