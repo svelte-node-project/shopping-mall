@@ -1,0 +1,8 @@
+POST http://localhost:3001/locations
+Content-Type: application/json
+
+{
+  "company_id": 2,
+  "level": 2,
+  "place_number": 4
+}
