@@ -27,6 +27,9 @@
     var swiper2 = new Swiper('.swiper2', {
       modules: [Navigation, Pagination],
       slidesPerView: 3,
+      pagination: {
+        el: '.swiper-pagination',
+      },
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',

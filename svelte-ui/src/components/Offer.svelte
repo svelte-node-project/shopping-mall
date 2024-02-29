@@ -19,7 +19,8 @@
 
 <div class="flex flex-wrap md:flex-nowrap">
 <div class="flex-1 p-10">
-    <h2 class="text-6xl font-bold mb-8" style="color: #266D85;">{updatedOffer.title}</h2>
+    <div class="blueFont pb-8"><a href="/">HOME</a> / <a href="/offers">OFFERS</a> / {updatedOffer.title}</div>
+    <h2 class="text-6xl font-bold mb-8 blueFont">{updatedOffer.title}</h2>
     <p class="text-xl mb-8">{updatedOffer.description}</p>
     <a href={`/companies/${updatedOffer.company_id}`} class="view-all-link">Visit Store</a>
 </div>
