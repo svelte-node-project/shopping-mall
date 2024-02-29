@@ -112,3 +112,23 @@ CREATE TABLE banners (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL
 );
+
+CREATE TYPE feedback_types AS ENUM ('Thanks', 'Suggestion', 'Complaint', 'Other');
+
+CREATE TABLE feedbacks (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    feedback_type feedback_types [] NOT NULL,
+    is_general BOOLEAN NOT NULL DEFAULT true, 
+    company_id INTEGER NOT NULL REFERENCES companies(id), -- If is_general=true then select the Owner in this field
+    feedback TEXT NOT NULL,
+    want_reply BOOLEAN NOT NULL
+);
+
+CREATE TABLE newsletter (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT true
+);

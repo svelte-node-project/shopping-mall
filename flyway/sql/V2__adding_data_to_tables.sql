@@ -174,3 +174,17 @@ VALUES
     ('Banner #5', 6, NULL, 'http://link_to_the_banner_5_image', NULL, '2024-02-01', '2024-03-31'),
     ('Banner #6', NULL, NULL, 'http://link_to_the_banner_6_image', 'http://navigation_link_for_other_than_offers_or_news', '2024-02-15', '2024-03-15');
 
+
+INSERT INTO feedbacks (name, email, feedback_type, is_general, company_id, feedback, want_reply)
+VALUES
+    ('Visitor #11', 'visitor11@test.fi', '{Thanks, Suggestion}', true, 1, 'Positive general feedback with a suggestion.', false),
+    ('Visitor #12', 'visitor12@test.fi', '{Complaint}', false, 2, 'Bad quality of service.', true),
+    ('Visitor #13', 'visitor13@test.fi', '{Thanks, Other}', false, 5, 'Thanks and a question.', true),
+    ('Visitor #14', 'visitor14@test.fi', '{Other}', true, 1, 'Something else (general feedback).', true);
+
+
+INSERT INTO newsletter (name, email, active)
+VALUES
+    ('Visitor #1', 'visitor1@test.fi', true),
+    ('Visitor #2', 'visitor2@test.fi', false),
+    ('Visitor #3', 'visitor3@test.fi', true);
