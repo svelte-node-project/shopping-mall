@@ -7,7 +7,8 @@
         "text": ""
     });
 
-    const href = "http://localhost:3001/companies?types=tenant&group=true&full=true";
+    // const href = "http://localhost:3001/companies?types=tenant&group=true&full=true";
+    const href = "http://localhost:3001/companies?group=true&full=true";
 </script>
 
 
