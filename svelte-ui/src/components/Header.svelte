@@ -1,4 +1,4 @@
-Header.svelte:
+
 <script>
   import { onMount } from "svelte";
   let isMenuOpen = false;
