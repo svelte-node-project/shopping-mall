@@ -1,5 +1,7 @@
 <script>
-    import TodoList from '../components/todos-management/TodoList.svelte';
-  </script>
+  import Hero from "../components/Hero.svelte";
   
-  <TodoList />
+</script>
+<main class="flex flex-col">
+  <Hero />
+</main>
