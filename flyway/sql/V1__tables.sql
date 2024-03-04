@@ -78,7 +78,7 @@ CREATE TABLE working_hours (
     week_day INTEGER,
     start_time TIME,
     end_time TIME,
-    by_appointment BOOLEAN DEFAULT false,
+    by_appointment BOOLEAN NOT NULL DEFAULT false,
     start_date DATE,
     end_date DATE
 );
