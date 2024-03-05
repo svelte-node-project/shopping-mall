@@ -48,14 +48,30 @@ CREATE TABLE services (
     main_category BOOLEAN NOT NULL
 );
 
+-- -- Locations within the shopping mall
+-- CREATE TABLE locations (
+--     id SERIAL PRIMARY KEY,
+--     -- company_id INTEGER NOT NULL REFERENCES companies(id),
+--     company_id INTEGER REFERENCES companies(id),
+--     building TEXT,
+--     level TEXT NOT NULL,
+--     place_number INTEGER NOT NULL
+-- );
+
 -- Locations within the shopping mall
 CREATE TABLE locations (
     id SERIAL PRIMARY KEY,
-    -- company_id INTEGER NOT NULL REFERENCES companies(id),
-    company_id INTEGER REFERENCES companies(id),
     building TEXT,
     level TEXT NOT NULL,
     place_number INTEGER NOT NULL
+);
+
+-- Locations occupied by companies
+CREATE TABLE company_locations (
+    id SERIAL PRIMARY KEY,
+    company_id INTEGER REFERENCES companies(id),
+    location_id INTEGER NOT NULL REFERENCES locations(id),
+    updated_on TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 -- Offers

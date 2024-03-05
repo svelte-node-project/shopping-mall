@@ -71,33 +71,51 @@ VALUES
     (9, 9, true); --supermarket
 
 
-INSERT INTO locations (company_id, building, level, place_number)
+-- INSERT INTO locations (company_id, building, level, place_number)
+-- VALUES
+--     (NULL, NULL, 'Level 1', 1),
+--     (NULL, NULL, 'Level 1', 2),
+--     (2, NULL, 'Level 1', 3),
+--     (3, NULL, 'Level 1', 4),
+--     (4, NULL, 'Level 2', 1),
+--     (8, NULL, 'Level 2', 2),
+--     (NULL, NULL, 'Level 2', 3),
+--     (NULL, NULL, 'Level 2', 4),
+--     (6, NULL, 'Level 3', 1),
+--     (5, NULL, 'Level 3', 2),
+--     (7, NULL, 'Level 3', 3),
+--     (NULL, NULL, 'Level 3', 4),
+--     (9, NULL, 'Level 1', 1);
+
+
+INSERT INTO locations (building, level, place_number)
 VALUES
-    (NULL, NULL, 'Level 1', 1),
-    (NULL, NULL, 'Level 1', 2),
-    (2, NULL, 'Level 1', 3),
-    (3, NULL, 'Level 1', 4),
-    (4, NULL, 'Level 2', 1),
-    (8, NULL, 'Level 2', 2),
-    (NULL, NULL, 'Level 2', 3),
-    (NULL, NULL, 'Level 2', 4),
-    (6, NULL, 'Level 3', 1),
-    (5, NULL, 'Level 3', 2),
-    (7, NULL, 'Level 3', 3),
-    (NULL, NULL, 'Level 3', 4),
-    (9, NULL, 'Level 1', 1);
+    (NULL, 'Level 1', 1),
+    (NULL, 'Level 1', 2),
+    (NULL, 'Level 1', 3),
+    (NULL, 'Level 1', 4),
+    (NULL, 'Level 2', 1),
+    (NULL, 'Level 2', 2),
+    (NULL, 'Level 2', 3),
+    (NULL, 'Level 2', 4),
+    (NULL, 'Level 3', 1),
+    (NULL, 'Level 3', 2),
+    (NULL, 'Level 3', 3),
+    (NULL, 'Level 3', 4);
 
 
--- -- Offers
--- CREATE TABLE offers (
---     id SERIAL PRIMARY KEY,
---     company_id INTEGER NOT NULL REFERENCES companies(id),
---     category_id INTEGER NOT NULL REFERENCES categories(id),
---     name TEXT NOT NULL,
---     description  TEXT NOT NULL,
---     start_date DATE,
---     end_date DATE
--- );
+INSERT INTO company_locations (company_id, location_id, updated_on)
+VALUES
+    (2, 3, NOW() - INTERVAL '2 month'),
+    (3, 4, NOW() - INTERVAL '2 month'),
+    (4, 5, NOW() - INTERVAL '1 month'),
+    (8, 6, NOW() - INTERVAL '1 month'),
+    (6, 9, NOW() - INTERVAL '1 month'),
+    (5, 10, NOW() - INTERVAL '1 month'),
+    (7, 11, NOW() - INTERVAL '1 month'),
+    (9, 2, NOW() - INTERVAL '1 month'),
+    (NULL, 2, NOW()),
+    (9, 1, NOW());
 
 
 INSERT INTO working_hours (company_id, week_day, start_time, end_time, by_appointment, start_date, end_date)
@@ -120,8 +138,8 @@ VALUES
     (3, NULL, NULL, NULL, false, '2024-12-25', '2024-12-25'),
     (8, NULL, NULL, NULL, true, NULL, NULL),
     (3, NULL, '12:00', '16:00', false, '2024-02-29', '2024-03-31'),
-    (4, NULL, NULL, NULL, false, '2024-02-29', '2024-02-29'),
-    (2, NULL, '05:00', '23:30', false, '2024-02-29', '2024-02-29'),
+    (4, NULL, NULL, NULL, false, '2024-03-04', '2024-03-04'),
+    (2, NULL, '05:00', '23:30', false, '2024-03-04', '2024-03-04'),
     (9, 0, '00:00', '24:00', false, NULL, NULL),
     (9, 1, '00:00', '24:00', false, NULL, NULL),
     (9, 2, '00:00', '24:00', false, NULL, NULL),
@@ -130,20 +148,6 @@ VALUES
     (9, 5, '00:00', '24:00', false, NULL, NULL),
     (9, 6, '00:00', '24:00', false, NULL, NULL);
 
--- -- News
--- CREATE TABLE news (
---     id SERIAL PRIMARY KEY,
---     news_date DATE NOT NULL,
---     title TEXT NOT NULL,
---     news_text TEXT NOT NULL
--- );
-
--- -- Website settings
--- CREATE TABLE settings (
---     id SERIAL PRIMARY KEY,
---     name TEXT NOT NULL,
---     setting_values TEXT []
--- );
 
 INSERT INTO offers (company_id, category_id, name, description, image_link, show_on_homepage, start_date, end_date)
 VALUES
