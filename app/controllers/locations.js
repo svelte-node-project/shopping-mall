@@ -3,6 +3,16 @@ import { pool } from "../database/database.js";
 const locationsController = {
     getAll: async (req, res) => {
         try {
+            if (req.query.floors_only && req.query.floors_only === "true") {
+                let data = await pool.query(`
+                    SELECT DISTINCT level FROM locations
+                    ORDER BY level
+                `);
+
+                res.json(data.rows);
+                return;
+            }
+
             let query = `
                 SELECT locations.id AS location_id, company_id, building, level, place_number, updated_on
                 FROM locations            

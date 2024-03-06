@@ -11,7 +11,7 @@
             field: "name"
         },
         "floor": {
-            link: "",
+            link: "http://localhost:3001/locations?floors_only=true",
             field: "level"
         }
     };

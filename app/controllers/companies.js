@@ -70,7 +70,7 @@ const getFullDataQuery = (simpleQuery) => {
                 'by_appointment', by_appointment
             )) AS working_hours
             FROM working_hours
-            WHERE by_appointment IS NOT NULL OR ((end_date IS NULL OR end_date >= NOW()))
+            WHERE by_appointment = true OR (end_date IS NULL OR end_date >= CURRENT_DATE)
             GROUP BY company_id) company_working_hours
         ON companies.id = company_working_hours.company_id
 
@@ -80,7 +80,23 @@ const getFullDataQuery = (simpleQuery) => {
                 'level', level,
                 'place_number', place_number
             )) AS locations
-            FROM locations
+            FROM (
+                SELECT company_id, building, level, place_number
+                FROM (
+                    SELECT company_locations.company_id, company_locations.location_id FROM company_locations
+                    INNER JOIN (
+                        SELECT company_id, MAX(updated_on) AS latest_updated_on FROM company_locations
+                        GROUP BY company_id
+                    ) latest_locations
+                    ON
+                        company_locations.company_id = latest_locations.company_id
+                        AND
+                        company_locations.updated_on = latest_locations.latest_updated_on
+                ) latest_company_locations
+				LEFT JOIN locations
+                ON
+                    locations.id = latest_company_locations.location_id
+            ) latest_locations
             GROUP BY company_id) company_locations
         ON companies.id = company_locations.company_id
     `;
