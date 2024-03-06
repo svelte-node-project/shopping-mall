@@ -29,30 +29,49 @@ CREATE TABLE companies (
     address TEXT,
     phone_numbers TEXT [],
     email TEXT,
-    website TEXT
+    website TEXT,
+    name_in_url TEXT NOT NULL DEFAULT 'default-value'
 );
 
 -- Categories of services
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    name_in_url TEXT NOT NULL DEFAULT 'default-value'
 );
 
 -- Services provided by a company (for all types of companies)
 CREATE TABLE services (
     id SERIAL PRIMARY KEY,
     company_id INTEGER NOT NULL REFERENCES companies(id),
-    category_id INTEGER NOT NULL REFERENCES categories(id)
+    category_id INTEGER NOT NULL REFERENCES categories(id),
+    main_category BOOLEAN NOT NULL
 );
+
+-- -- Locations within the shopping mall
+-- CREATE TABLE locations (
+--     id SERIAL PRIMARY KEY,
+--     -- company_id INTEGER NOT NULL REFERENCES companies(id),
+--     company_id INTEGER REFERENCES companies(id),
+--     building TEXT,
+--     level TEXT NOT NULL,
+--     place_number INTEGER NOT NULL
+-- );
 
 -- Locations within the shopping mall
 CREATE TABLE locations (
     id SERIAL PRIMARY KEY,
-    -- company_id INTEGER NOT NULL REFERENCES companies(id),
-    company_id INTEGER REFERENCES companies(id),
     building TEXT,
-    level INTEGER NOT NULL,
+    level TEXT NOT NULL,
     place_number INTEGER NOT NULL
+);
+
+-- Locations occupied by companies
+CREATE TABLE company_locations (
+    id SERIAL PRIMARY KEY,
+    company_id INTEGER REFERENCES companies(id),
+    location_id INTEGER NOT NULL REFERENCES locations(id),
+    updated_on TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 -- Offers
@@ -62,6 +81,8 @@ CREATE TABLE offers (
     category_id INTEGER NOT NULL REFERENCES categories(id),
     name TEXT NOT NULL,
     description  TEXT NOT NULL,
+    image_link TEXT,
+    show_on_homepage BOOLEAN NOT NULL DEFAULT false,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL
 );
@@ -70,9 +91,10 @@ CREATE TABLE offers (
 CREATE TABLE working_hours (
     id SERIAL PRIMARY KEY,
     company_id INTEGER NOT NULL REFERENCES companies(id),
-    week_day TEXT,
+    week_day INTEGER,
     start_time TIME,
     end_time TIME,
+    by_appointment BOOLEAN NOT NULL DEFAULT false,
     start_date DATE,
     end_date DATE
 );
@@ -82,7 +104,10 @@ CREATE TABLE news (
     id SERIAL PRIMARY KEY,
     news_date DATE NOT NULL,
     title TEXT NOT NULL,
-    news_text TEXT NOT NULL
+    news_text TEXT NOT NULL,
+    image_link TEXT,
+    show_on_homepage BOOLEAN NOT NULL DEFAULT false,
+    news_end_date DATE NOT NULL
 );
 
 -- Website settings
@@ -92,21 +117,34 @@ CREATE TABLE settings (
     setting_values TEXT []
 );
 
+-- Banners
+CREATE TABLE banners (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    offer_id INTEGER REFERENCES offers(id),
+    news_id INTEGER REFERENCES news(id),
+    image_link TEXT,
+    navigation_link TEXT,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL
+);
 
+CREATE TYPE feedback_types AS ENUM ('Thanks', 'Suggestion', 'Complaint', 'Other');
 
--- -- ============================================
--- SELECT * FROM companies
--- WHERE companies.type_id IN (SELECT id FROM company_types WHERE type_name = 'tenant')
--- JOIN
---     services
--- ON companies.id = services.company_id
--- WHERE 
+CREATE TABLE feedbacks (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    feedback_type feedback_types [] NOT NULL,
+    is_general BOOLEAN NOT NULL DEFAULT true, 
+    company_id INTEGER NOT NULL REFERENCES companies(id), -- If is_general=true then select the Owner in this field
+    feedback TEXT NOT NULL,
+    want_reply BOOLEAN NOT NULL
+);
 
-
-
-
--- select * from companies
-
--- inner join company_types on 
-
--- where type_id = 'ten'
+CREATE TABLE newsletter (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT true
+);
