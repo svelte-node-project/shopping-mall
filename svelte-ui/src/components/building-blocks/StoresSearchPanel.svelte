@@ -12,6 +12,12 @@
         </div>
     {/if}
 
+    {#if searchParams.hasOwnProperty("floor")}
+        <div class="col">
+            <SingleSearchParam type="floor" bind:value={searchParams.floor} defaultName="By floor" />
+        </div>
+    {/if}
+
     {#if searchParams.hasOwnProperty("text")}
         <div class="col">
             <SingleSearchParam type="text" bind:value={searchParams.text} defaultName="" />

@@ -9,6 +9,7 @@
     const link = "stores";
 
     const categoryFilter = $derived(searchParams.category);
+    const floorFilter = $derived(searchParams.floor);
     const textFilter = $derived(searchParams.text);
 
     const init = async () => {
@@ -17,12 +18,14 @@
         stores = [...allStores];
     };
 
-    const getFilteredStoresList = (category, txt) => {
+    const getFilteredStoresList = (category, floor, txt) => {
         return allStores.map(el => (
                 {
                     letter: el.letter,
                     companies: [...el.companies].filter(company => (
                         (category ? company.categories.some(cat => cat.name === category) : true)
+                        && company.locations &&
+                        (floor ? company.locations.some(location => location.level === floor) : true)
                         &&
                         company.name.toLowerCase().includes(txt.toLocaleLowerCase())
                     ))
@@ -31,7 +34,7 @@
     };
 
     $effect(() => {
-        stores = getFilteredStoresList(categoryFilter, textFilter);
+        stores = getFilteredStoresList(categoryFilter, floorFilter, textFilter);
     });
  
     onMount(init);
