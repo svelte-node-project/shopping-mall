@@ -143,7 +143,7 @@ const companiesController = {
             }
 
             const searchCondition = isNaN(parseInt(id))
-                ? `name_in_url = '${id}'`
+                ? `name_in_url = '${id}' OR name ILIKE '${id}'`
                 : `id = ${id}`;
 
             let companyQuery = `SELECT * FROM companies WHERE ${searchCondition}`;
