@@ -30,14 +30,14 @@ CREATE TABLE companies (
     phone_numbers TEXT [],
     email TEXT,
     website TEXT,
-    name_in_url TEXT NOT NULL DEFAULT 'default-value'
+    name_in_url TEXT NOT NULL
 );
 
 -- Categories of services
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    name_in_url TEXT NOT NULL DEFAULT 'default-value'
+    name_in_url TEXT NOT NULL
 );
 
 -- Services provided by a company (for all types of companies)
