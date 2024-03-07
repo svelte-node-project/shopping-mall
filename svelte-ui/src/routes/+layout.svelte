@@ -1,10 +1,14 @@
-<!-- <script>
-    import { onMount } from 'svelte';
-    import { initBooks } from '../stores/books.svelte.js';
-    
-    onMount(() => {
-      initBooks();
-    });
-  </script>-->
+<script>
+    import "../app.css";
+    import 'flowbite';
+    import Navbar from "../components/Navbar.svelte";
+    import Footer from "../components/Footer.svelte";
+  </script>
   
-  <slot /> 
+  <Navbar />
+  
+  <main>
+    <slot />
+  </main>
+  
+  <Footer />

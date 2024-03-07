@@ -1,9 +1,9 @@
 FROM node:21-alpine
 
-WORKDIR /app
+WORKDIR /svelte-ui
 
-COPY package*.json .
-COPY *config.js .
+COPY package*.json ./
+COPY *config.js ./
 
 RUN npm ci
 
