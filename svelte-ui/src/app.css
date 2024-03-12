@@ -12,20 +12,6 @@
     border-radius: 5px;
   }
 
-.header {
-    padding-left: 30px; 
-    padding-top: 10px; 
-    font-size: 60px;
-    font-weight: bold;
-  }
-
-.navbar-styling {
-    padding-left: 50px; 
-    padding-right: 50px; 
-    padding-top: 20px; 
-    padding-bottom: 20px;
-}
-
 .blueFont {
   color: #266D85;
 }
