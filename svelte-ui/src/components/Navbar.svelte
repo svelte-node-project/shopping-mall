@@ -1,6 +1,8 @@
 <script>
   import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
   let isMenuOpen = false;
+  let filterText = '';
   
   function toggleMenu() {
     isMenuOpen = !isMenuOpen;
@@ -10,6 +12,13 @@
   function navigate() {
     isMenuOpen = false;
   }
+  
+  async function handleSearch() {
+    if (filterText.trim()) {
+      await goto(`/search?searchText=${filterText}`);
+    }
+  }
+  
 </script>
 
 <header class="header bg-white fixed top-0 w-full z-50">
@@ -44,8 +53,8 @@
       <button class="close-btn pt-1" on:click={toggleMenu} style="font-size: 2rem;">×</button>
     </div>
     <div class="search-container relative items-center mb-8">
-      <input type="text" placeholder="Search" class="search-input text-xs" />
-      <i class="search-icon fa fa-search" aria-hidden="true"></i>
+      <input type="text" placeholder="Search" class="search-input text-xs" bind:value={filterText} on:keyup={event => event.key === 'Enter' && handleSearch()}/>
+      <i class="search-icon fa fa-search" aria-hidden="true" on:click={handleSearch}></i>
     </div>
     <div class="links-container mt-7 pt-7 flex flex-col lg:flex-row gap-5">
       <a href="/" class="main-link text-lg font-semibold {path === '/' ? 'active' : ''}" on:click={navigate}>Home</a>
