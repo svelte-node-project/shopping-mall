@@ -81,7 +81,7 @@
       margin-right: 2rem;
       text-align: left;
       padding-left: 1rem;
-      font-size: 1rem;
+      font-size: 0.7rem;
   }
 
   .line {
@@ -95,7 +95,7 @@
       flex-basis: 20%;
       white-space: nowrap;
       text-align: left;
-      font-size: 1rem;
+      font-size: 0.7rem;
   }
 
   @media (max-width: 768px) {
@@ -116,7 +116,7 @@
     .time {
       flex-basis: auto;
       margin-left: auto;
-      padding-right: 0.5rem;
+      padding-right: 8rem;
     }  
   }
   @media (min-width: 1024px) {

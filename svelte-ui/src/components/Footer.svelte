@@ -1,4 +1,4 @@
-<footer class="p-10 bg-base-300 text-base-content">
+<footer class="p-10 bg-base-300 text-base-content" style="z-index: 50; position: relative;">
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
     <div class="flex items-top mt-1"> 
       <a href="/" class="flex">
@@ -38,5 +38,3 @@
     </div>
   </div>
 </footer>
-  
-  
