@@ -29,3 +29,40 @@
 .blueFont {
   color: #266D85;
 }
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #3a8c66;
+}
+
+.overlay-content {
+  position: relative;
+  top: 20%;
+  width: 80%;
+  text-align: center;
+  margin-top: 30px;
+  margin: auto;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  color: white;
+  width: 2em;
+  height: 2em;
+  border-radius: 2em;
+  border: 1px solid #FFFFFF;
+}
+
+
+
+
+
+
