@@ -52,11 +52,10 @@ const getFullDataQuery = (simpleQuery) => {
                 'name', name,
                 'name_in_url', name_in_url
             )) AS categories
-            FROM
-                (SELECT * FROM services
-                WHERE main_category = true) services
+            FROM services
             LEFT JOIN categories
             ON services.category_id = categories.id
+            WHERE main_category = true
             GROUP BY company_id, name_in_url) categories
         ON companies.id = categories.company_id
 
@@ -112,6 +111,7 @@ const companiesController = {
             let companiesQuery = `
                 SELECT * FROM companies ${getCondition(types, categories, name)}
             `;
+
             if (req.query.full && req.query.full === "true") {
                 companiesQuery = getFullDataQuery(companiesQuery);
             }
@@ -143,12 +143,23 @@ const companiesController = {
             }
 
             const searchCondition = isNaN(parseInt(id))
-                ? `name_in_url = '${id}'`
+                ? `name_in_url = '${id}' OR name ILIKE '${id}'`
                 : `id = ${id}`;
 
             let companyQuery = `SELECT * FROM companies WHERE ${searchCondition}`;
 
-            if (req.query.full && req.query.full === "true") {
+            if (req.query.main_category && req.query.main_category === "true") {
+                companyQuery = `
+                    SELECT companies.*, categories.name AS category_name, categories.name_in_url AS category_name_in_url
+                    FROM (${companyQuery}) companies
+                    LEFT JOIN services
+                    ON services.company_id = companies.id
+                    LEFT JOIN categories
+                    ON services.category_id = categories.id
+                    WHERE main_category = true
+                    LIMIT 1
+                `;
+            } else if (req.query.full && req.query.full === "true") {
                 companyQuery = getFullDataQuery(companyQuery);
             }
 
