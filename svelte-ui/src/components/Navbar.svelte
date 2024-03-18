@@ -1,6 +1,6 @@
 <script>
   import { goto } from '$app/navigation';
-
+  
   let filterText = $state('');
 
   const searchByKey = (event) => {

@@ -5,11 +5,11 @@
     let { offerId } = $props();
     let offer = $state({});
     let updatedOffer = $state({});
-    let storeLink = $state('en/stores/Groceries/groceries');
+    let storeLink = $state('');
 
     onMount(async () => {
         offer = await getOffer(offerId);
-        //storeLink = await getCompanyLink(offerId);
+        storeLink = await getCompanyLink(offerId);
 
         //offer = { id: 1, company_id: 1, name: 'LUMENE - 20% OFF ALL PRODUCTS, Valid 01.-07.04.2024', description: 'Members enjoy 20% off all products. Valid 01.-07.04.2024.', image_link:'/images/offer1.png', show_on_homepage: true };
 

@@ -7,11 +7,11 @@ const searchController = {
       const companiesQuery = `
         SELECT companies.id, companies.name, companies.description, '/en/stores/' || categories.name || '/' || categories.name_in_url AS link
         FROM companies
-	LEFT JOIN services ON services.company_id = companies.id
-	LEFT JOIN categories ON services.category_id = categories.id
-        WHERE companies.name ILIKE $1
-        OR companies.description ILIKE $1
-	AND services.main_category = true;
+	      LEFT JOIN services ON services.company_id = companies.id
+	      LEFT JOIN categories ON services.category_id = categories.id
+        WHERE (companies.name ILIKE $1
+        OR companies.description ILIKE $1)
+	      AND services.main_category = true;
     `;
       const offersQuery = `
         SELECT id, name, description, '/offers/' || id AS link
