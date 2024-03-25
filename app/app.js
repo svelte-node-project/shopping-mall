@@ -8,6 +8,7 @@ import locationsRouter from "./routes/locations.js";
 import newsRouter from "./routes/news.js";
 import offersRouter from "./routes/offers.js";
 import openingHoursRouter from "./routes/openingHours.js";
+import feedbackRouter from "./routes/feedback.js";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/offers", offersRouter);
 app.use("/news", newsRouter);
 app.use("/banners", bannersRouter);
 app.use("/locations", locationsRouter);
+app.use("/feedback", feedbackRouter);
 
 const PORT = 3001;
 app.listen(PORT, () => {
