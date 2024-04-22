@@ -1,6 +1,6 @@
-FROM node:21-alpine
+FROM node:21-bookworm
 
-WORKDIR /svelte-ui
+WORKDIR /app
 
 COPY package*.json ./
 COPY *config.js ./

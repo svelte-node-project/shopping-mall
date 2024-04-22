@@ -153,3 +153,5 @@ package
 # End of https://www.toptal.com/developers/gitignore/api/node,svelte
 
 .DS_Store 
+svelte-ui/.DS_Store
+svelte-ui/static/.DS_Store

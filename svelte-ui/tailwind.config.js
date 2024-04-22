@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{js,svelte}", "./node_modules/flowbite/**/*.js"],
-  plugins: [require("@tailwindcss/typography"), require("daisyui"), require('flowbite/plugin')],
+  content: ["./src/**/*.{js,svelte}"],
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
   theme: {
     extend: {
       fontFamily: {

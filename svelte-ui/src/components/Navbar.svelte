@@ -1,3 +1,29 @@
+<script>
+  import { goto } from '$app/navigation';
+  
+  let filterText = $state('');
+
+  const searchByKey = (event) => {
+    if (event.key === 'Enter') {
+      search()
+    }
+  }
+
+  const search = () => {
+    goto(`/search?searchText=${filterText}`); 
+    closeSearch()
+  }
+
+  const openSearch = () => {
+    filterText = '';
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  const closeSearch = () => {
+    document.getElementById("myOverlay").style.display = "none";
+  }
+</script>
+
 <header class="navbar bg-base-100 drop-shadow navbar-styling" >
 
     <div class="flex-1 text-xl" style="font-size: 40px; display: flex; align-items: center;">
