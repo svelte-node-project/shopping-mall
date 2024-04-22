@@ -1,19 +1,21 @@
 <script>
-    let { options, value, showOptions } = $props();
+    let { defaultName, options, value=$bindable(), showOptions=$bindable() } = $props();
 
-    const updateValueAndClose = (item) => {
-        return () => {
-            value = item;
-            showOptions = !showOptions;
-        };
+    const updateValueAndClose = (event) => {
+        const selectedIndex = event.target.selectedIndex;
+        value = options[selectedIndex].value;
+        showOptions = !showOptions;
     };
+
 </script>
 
-
-<div class = "dropdown">
-    {#each options as item}
-        <button type="button" on:click={updateValueAndClose(item.value)}>{item.name}</button>
-    {/each}
+<div class="dropdown">
+    <select bind:value={value} on:change={updateValueAndClose}>
+        {#each options as option}
+        <option style="display: none;" value="" selected>{defaultName}</option>
+            <option value={option.value}>{option.name}</option>
+        {/each}
+    </select>
 </div>
 
 
@@ -24,7 +26,8 @@
         cursor: pointer;
         position: absolute;
         overflow: auto;
-        width: 22.2%;
+        width: 15%;
         z-index: 99;
+        
     }    
 </style>

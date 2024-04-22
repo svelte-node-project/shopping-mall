@@ -2,8 +2,9 @@
     import { onMount } from "svelte";
     import Dropdown from "./Dropdown.svelte";
 
-    let { type, value, defaultName } = $props();
-    let options;
+    let { type, value = $bindable(), defaultName , showOptions= $bindable()} = $props();
+    
+    let options = $state([]);
 
     const params = {
         "category": {
@@ -16,7 +17,7 @@
         }
     };
 
-    let showOptions = $state(false);
+  //  let showOptions = $state(false);
 
     const updateShowOptions = () => {
         showOptions = !showOptions;
@@ -32,12 +33,15 @@
             options = [
                 { name: "All", value: ""},
                 ...(await result.json())
-                    .map(el => ({ name: el[params[type].field], value: el[params[type].field] }))
+                    ?.map(el => ({ name: el[params[type].field], value: el[params[type].field] }))
             ];
+        
         }
     };
+  
 
     onMount(init);
+ 
 </script>
 
 <svelte:window on:click={closeOptions} on:keyup={closeOptions}/> 
@@ -46,10 +50,7 @@
     {#if type === "text"}
         <input type="search" placeholder="Search" bind:value={value} />
     {:else}        
-        <button type="button" on:click|stopPropagation={updateShowOptions}>{value === "" ? defaultName : value}</button>
-        {#if showOptions}
-            <Dropdown options={options} bind:showOptions={showOptions} bind:value={value} />
-        {/if}    
+         <Dropdown defaultName={defaultName} options={options} bind:showOptions={showOptions} bind:value={value} />    
     {/if}
 </div>
 

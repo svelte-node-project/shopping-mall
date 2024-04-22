@@ -1,7 +1,7 @@
 <script>
     import SingleSearchParam from "./SingleSearchParam.svelte";
 
-    const { searchParams } = $props();
+    const { searchParams = $bindable() } = $props();
 </script>
 
 
@@ -30,6 +30,7 @@
     .search-panel {
         display: flex;
         flex-direction: row;
+        margin: 2rem;
     }
 
     .col {
