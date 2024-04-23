@@ -1,5 +1,5 @@
 <script>
-    import Companies from '../../../components/Companies.svelte';
+    import Companies from '../../components/Companies.svelte';
 
     let searchParams = $state({
         "category": "",

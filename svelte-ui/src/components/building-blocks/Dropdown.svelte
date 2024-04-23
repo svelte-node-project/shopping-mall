@@ -2,16 +2,10 @@
     let { defaultName, options, value=$bindable(), showOptions } = $props();
 
     const updateValueAndClose = (event) => {
-        console.log("option", options)
         const selectedIndex = event.target.selectedIndex;
-        console.log("selected", selectedIndex)
         value = options[selectedIndex-1]?.value;
-        console.log("value", value)
         showOptions = !showOptions;
-        console.log("showoption", showOptions)
     };
-console.log(options)
-console.log("value",value)
 
 </script>
 
