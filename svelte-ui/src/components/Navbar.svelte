@@ -36,7 +36,7 @@
       <ul class="menu menu-horizontal px-1" style="font-size: 20px; font-weight: bold"> 
         <li><a href="/">Home</a></li>
         <li><a href="/shop">Shop</a></li>
-        <li><a href="/restaurants">Dine</a></li>
+        <li><a href="/dine">Dine</a></li>
         <li><a href="/info">Info</a></li>
         <li><a href="/offers">Offers</a></li>
         <li><a href="/happenings">Happenings</a></li>

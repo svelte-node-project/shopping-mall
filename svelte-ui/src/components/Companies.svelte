@@ -3,7 +3,7 @@
     import CompaniesList from "./building-blocks/CompaniesList.svelte";
     import StoresSearchPanel from "./building-blocks/StoresSearchPanel.svelte";
 
-    let { searchParams = $bindable() , href, header }= $props();
+    let { searchParams=$bindable()  , href, header }= $props();
 
     let stores = $state([]);
     let allStores = [];

@@ -1,33 +1,26 @@
 <script>
-    let { defaultName, options, value=$bindable(), showOptions=$bindable() } = $props();
+    let { defaultName, options, value=$bindable(), showOptions } = $props();
 
     const updateValueAndClose = (event) => {
+        console.log("option", options)
         const selectedIndex = event.target.selectedIndex;
-        value = options[selectedIndex].value;
+        console.log("selected", selectedIndex)
+        value = options[selectedIndex-1]?.value;
+        console.log("value", value)
         showOptions = !showOptions;
+        console.log("showoption", showOptions)
     };
+console.log(options)
+console.log("value",value)
 
 </script>
 
-<div class="dropdown">
-    <select bind:value={value} on:change={updateValueAndClose}>
+<div >
+    <select class="select select-bordered w-full max-w-xs" onchange={updateValueAndClose}>
+        <option disabled selected>{defaultName}:</option>
         {#each options as option}
-        <option style="display: none;" value="" selected>{defaultName}</option>
             <option value={option.value}>{option.name}</option>
         {/each}
     </select>
 </div>
 
-
-<style>
-    .dropdown {
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        position: absolute;
-        overflow: auto;
-        width: 15%;
-        z-index: 99;
-        
-    }    
-</style>

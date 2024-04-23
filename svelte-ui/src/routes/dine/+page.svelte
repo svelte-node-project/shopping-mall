@@ -10,4 +10,4 @@
 </script>
 
 
-<Companies searchParams={searchParams} href={href} header={"Restaurants"} />
+<Companies bind:searchParams={searchParams} href={href} header={"Restaurants"} />
