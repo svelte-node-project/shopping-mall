@@ -3,7 +3,8 @@
     import CompaniesList from "./building-blocks/CompaniesList.svelte";
     import StoresSearchPanel from "./building-blocks/StoresSearchPanel.svelte";
 
-    let { searchParams, href, header }= $props();
+    let { searchParams=$bindable()  , href, header }= $props();
+
     let stores = $state([]);
     let allStores = [];
     const link = "stores";
@@ -12,7 +13,10 @@
     const floorFilter = $derived(searchParams.floor);
     const textFilter = $derived(searchParams.text);
 
+    
+
     const init = async () => {
+   
         const result = await fetch(href);
         allStores = await result.json();
         stores = [...allStores];
@@ -41,8 +45,16 @@
 </script>
 
 
+<div class="search">
 <h1>{header}</h1>
 
-<StoresSearchPanel bind:searchParams={searchParams} />
+    <StoresSearchPanel bind:searchParams={searchParams} />
+    
+    <CompaniesList stores={stores} link={link} />
+</div>
 
-<CompaniesList stores={stores} link={link} />
+<style> 
+.search {
+    margin: 2rem;
+}
+</style>
