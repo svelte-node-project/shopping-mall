@@ -27,7 +27,6 @@
     <nav class="mt-4">
         <ul class="main">
             <li class="mb-3"><a href="/hours" class="link link-hover">Opening hours</a></li>
-            <li class="mb-3"><a href="/contact" class="link link-hover">Contact information</a></li>
             <li class="mb-3"><a href="/feedback" class="link link-hover">Feedback</a></li>
             <li class="mb-3"><a href="/giftcard" class="link link-hover">Gift card</a></li>
         </ul>

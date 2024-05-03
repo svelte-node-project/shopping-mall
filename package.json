@@ -1,5 +1,9 @@
 {
   "dependencies": {
     "svelte-hmr": "^0.16.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "prettier-plugin-svelte": "^3.2.3"
   }
 }
