@@ -45,16 +45,13 @@
 </script>
 
 
-<div class="search">
-<h1>{header}</h1>
+<div class=" md:mx-auto p-5">
+
+    <h1 class="text-4xl font-bold">{header}</h1>
+
 
     <StoresSearchPanel bind:searchParams={searchParams} />
     
     <CompaniesList stores={stores} link={link} />
 </div>
 
-<style> 
-.search {
-    margin: 2rem;
-}
-</style>
