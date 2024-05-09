@@ -10,7 +10,7 @@ The technology stack for this project includes:
   - Node.js for building the backend server.
   - PostgreSQL as the database for storing data.
   - Flyway for versioning and managing database migrations.
-  - Docker and Docker Compose for containerization and orchestration.
+  - Docker Compose for containerization and orchestration.
 
 - **Frontend**:
   - Svelte Kit for building the user interface.
@@ -56,16 +56,10 @@ The project is organized into the following main directories:
    cd shopping-mall
    ```
 
-3. Install npm in app and svelte-ui folder
-
-   ```bash
-   install npm
-   ```
-
-4. Run the Docker-compose
+3. Run the Docker-compose
 
    ```bash
    docker-compose up -d
    ```
 
-5. Access the web application in your browser at http://localhost:5173
+4. Access the web application in your browser at http://localhost:5173
