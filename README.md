@@ -15,9 +15,6 @@ The technology stack for this project includes:
 - **Frontend**:
   - Svelte Kit for building the user interface.
   - Tailwind CSS for styling the components.
-  - JavaScript for frontend logic.
-  - HTML for markup.
-  - CSS for additional styling.
 
 
 ## Project structure
