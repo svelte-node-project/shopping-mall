@@ -16,7 +16,6 @@ const newsController = {
   getOne: async (req, res) => {
     try {
       let id = req.params.id;
-      console.log(id)
       let data = await pool.query(`SELECT * FROM news WHERE id=${id}`);
       res.json(data.rows[0]);
     } catch (e) {

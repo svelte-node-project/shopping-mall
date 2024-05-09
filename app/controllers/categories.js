@@ -13,7 +13,6 @@ const categoriesController = {
     getOne: async (req, res) => {
         try {
             let id = req.params.id;
-            console.log(id);
             let data = await pool.query(
                 `SELECT * FROM categories WHERE id=${id}`
             );

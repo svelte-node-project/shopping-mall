@@ -4,7 +4,7 @@ INSERT INTO banners (name, offer_id, news_id, image_link, navigation_link, start
 VALUES
     ('Banner #1', NULL, NULL, NULL, NULL, '2024-01-01', '2024-01-31'),
     ('Banner #2', NULL, NULL, '/images/image1.png', '/shop', '2024-01-01', '2024-07-31'),
-    ('Banner #3', NULL, NULL, NULL, NULL, '2024-04-01', '2024-12-31'),
+    ('Banner #3', NULL, NULL, '/images/image2.png', '/happenings/', '2024-04-01', '2024-12-31'),
     ('Banner #4', NULL, 1, '/images/image2.png', '/happenings/', '2024-02-01', '2024-03-31');
 
 Delete from offers;

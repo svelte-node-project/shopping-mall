@@ -67,7 +67,6 @@ const locationsController = {
     getOne: async (req, res) => {
         try {
             let id = req.params.id;
-            console.log(id);
 
             let data = await pool.query(`
                 SELECT * FROM company_locations

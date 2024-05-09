@@ -15,7 +15,6 @@ const openingHoursController = {
     getOne: async (req, res) => {
         try {
             let companyId = req.params.companyId;
-            console.log(companyId);
             const id = parseInt(companyId);
 
             if (!id || isNaN(id) || id != companyId) {
