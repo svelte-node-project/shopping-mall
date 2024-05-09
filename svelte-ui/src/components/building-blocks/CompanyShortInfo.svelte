@@ -7,7 +7,6 @@
         const result = getFormattedWorkingHours(company.working_hours, true)[0];
         return result ? result.formatted : "Closed";
     })();
-
 </script>
 
 

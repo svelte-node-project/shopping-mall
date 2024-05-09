@@ -5,7 +5,7 @@ const searchController = {
     try {
       const searchText = req.query.searchText;
       const companiesQuery = `
-        SELECT companies.id, companies.name, companies.description, '/en/stores/' || categories.name || '/' || categories.name_in_url AS link
+        SELECT companies.id, companies.name, companies.description, '/shop/' || categories.name || '/' || categories.name_in_url AS link
         FROM companies
 	      LEFT JOIN services ON services.company_id = companies.id
 	      LEFT JOIN categories ON services.category_id = categories.id

@@ -7,7 +7,7 @@
 
     let stores = $state([]);
     let allStores = [];
-    const link = "stores";
+    const link = "shop";
 
     const categoryFilter = $derived(searchParams.category);
     const floorFilter = $derived(searchParams.floor);

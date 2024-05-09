@@ -1,5 +1,5 @@
 <script>
-    import Company from "../../../../../components/Company.svelte";
+    import Company from "../../../../components/Company.svelte";
 
     const { data } = $props();
 </script>
