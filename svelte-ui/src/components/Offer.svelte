@@ -1,6 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import { getOffer } from '../http-actions/offers-api.js';
+    import { getCompanyLink } from "../helpers/companyHelper.js"
 
     let { offerId } = $props();
     let offer = $state({});
@@ -9,7 +10,8 @@
 
     onMount(async () => {
         offer = await getOffer(offerId);
-        storeLink = await getCompanyLink(offerId);
+        storeLink = await getCompanyLink(offer.company_id);
+        console.log(storeLink)
 
         //offer = { id: 1, company_id: 1, name: 'LUMENE - 20% OFF ALL PRODUCTS, Valid 01.-07.04.2024', description: 'Members enjoy 20% off all products. Valid 01.-07.04.2024.', image_link:'/images/offer1.png', show_on_homepage: true };
 
