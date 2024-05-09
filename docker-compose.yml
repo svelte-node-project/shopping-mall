@@ -1,7 +1,9 @@
 services:
     app:
-        build: app
+        image: node:21-bookworm
         restart: unless-stopped
+        command: bash -c "npm install && node --watch app.js"
+        working_dir: /app
         volumes:
             - ./app:/app
         ports:
@@ -29,11 +31,12 @@ services:
         command: -connectRetries=60 -baselineOnMigrate=true migrate
 
     ui:
-        build: ./svelte-ui
+        image: node:21-bookworm
+        command: bash -c "npm install && npm run dev -- --host 0.0.0.0"
+        working_dir: /app
         restart: unless-stopped
         volumes:
             - ./svelte-ui:/app
-            - /app/node_modules
         ports:
             - 5173:5173
         depends_on:
